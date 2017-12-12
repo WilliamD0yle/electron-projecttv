@@ -75,9 +75,10 @@ class Movies extends Component {
           flexDirection: 'row',
           flex: 1,
           height: 75,
-          backgroundColor: '#25272d',
+          backgroundColor: 'rgba(44, 46, 52, 0.5)',
           boxShadow: '10px rgb(0, 0, 0)',
-          marginBottom: 20}}
+          marginBottom: 20,
+        }}
         >
           <h1 style={{color: 'rgb(255, 255, 255)', fontSize: 20, fontWeight: '100', alignSelf: 'flex-end', paddingLeft: 10}}>
             Movies
