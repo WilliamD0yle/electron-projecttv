@@ -78,7 +78,7 @@ export default StyleSheet.create({
   },
   tagline: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '300',
     color: '#d7d5d5',
     paddingTop: 5,
     paddingBottom: 10,

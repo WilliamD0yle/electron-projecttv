@@ -4,7 +4,7 @@ export default StyleSheet = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#17181B',
+    backgroundColor: '#191b1f',
   },
   listContent: {
     display: 'flex',

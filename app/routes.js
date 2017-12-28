@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Movies from './Containers/Movies';
 import MovieDetails from './Containers/MovieDetails';
@@ -7,6 +8,6 @@ import MovieDetails from './Containers/MovieDetails';
 export default (
   <Switch>
     <Route exact path="/" component={Movies} />
-    <Route path="/moviedetails" exact render={props => <MovieDetails {...props}/>} />
+    <Route path="/moviedetails" component={MovieDetails} />
   </Switch>
 );

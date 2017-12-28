@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { moviesFetch } from '../Actions/MoviesActions';
+import NavHeader from '../Components/NavHeader';
 // Styles
 import styles from './Styles/MoviesStyle';
 const POSTER_URL = 'https://image.tmdb.org/t/p/w320';
@@ -14,9 +15,9 @@ class Movies extends Component {
       choice:'sort_by=popularity.desc',
       page: 1,
       selectedValue: 'Most Popular',
-      message: 'not at bottom',
     };
-    this.props.moviesFetch(this.state.choice, this.state.page).then(() => this.loadMoreItems());
+    // on exiting the movie details
+    {this.props.movies.length > 0 || this.props.moviesFetch(this.state.choice, this.state.page).then(() => this.loadMoreItems());}
     this.handleScroll = this.handleScroll.bind(this);
   }
 
@@ -34,6 +35,10 @@ class Movies extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    if(this.props.location.state) {
+      const elmnt = document.getElementById(`${this.props.location.state.index}`);
+      elmnt.scrollIntoView();
+    }
   }
 
   componentWillUnmount() {
@@ -50,13 +55,14 @@ class Movies extends Component {
       return (
         <div
           style={styles.row}
+          id={index}
           key={index}
           onClick={() => console.log(`clicked ${movie.original_title}`)}
         >
-          <Link to={{pathname: '/moviedetails', state: { movie: movie }}}>
+          <Link to={{pathname: '/moviedetails', state: { movie, index }}}>
             <img
               src={`${POSTER_URL}${movie.poster_path}`}
-              style={{width: 135, height: 205, borderRadius: 5}}
+              style={{width: 135, height: 205, borderRadius: 5, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9)'}}
             />
           </Link>
         </div>
@@ -70,20 +76,7 @@ class Movies extends Component {
         id="container"
         style={styles.container}
       >
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flex: 1,
-          height: 75,
-          backgroundColor: 'rgba(44, 46, 52, 0.5)',
-          boxShadow: '10px rgb(0, 0, 0)',
-          marginBottom: 20,
-        }}
-        >
-          <h1 style={{color: 'rgb(255, 255, 255)', fontSize: 20, fontWeight: '100', alignSelf: 'flex-end', paddingLeft: 10}}>
-            Movies
-          </h1>
-        </div>
+        <NavHeader />
         <div style={styles.listContent}>
           {this.renderItems()}
           <div className="fixedDiv" style={{ display: 'flex', flex: 1 }} />
@@ -94,7 +87,7 @@ class Movies extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let movies = state.movies.data;
+  const movies = state.movies.data;
 
   return { movies };
 };
