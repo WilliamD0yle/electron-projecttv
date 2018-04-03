@@ -12,7 +12,6 @@ export const moviesFetch = (choice, page) => {
     return fetch(`${API_URL}discover/movie?${choice}&page=${page}${API_KEY}`)
       .then(response => response.json())
       .then(response => {
-        console.log(response);
         dispatch({ type: MOVIES_FETCH, payload: response.results });
       });
   };

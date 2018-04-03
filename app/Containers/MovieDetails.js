@@ -25,7 +25,6 @@ class MovieDetailsScreen extends Component {
   render () {
     const { backdrop_path, overview, poster_path, title, genre_ids, release_date } = this.props.location.state.movie;
     const { genres, runtime, tagline } = this.props;
-    console.log(genres);
     return (
       <div style={styles.container}>
         {/* <YouTube
@@ -33,7 +32,7 @@ class MovieDetailsScreen extends Component {
         /> */}
         <img
           style={styles.backgrondImage}
-          src={`https://image.tmdb.org/t/p/w1000${backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/w780${backdrop_path}`}
         />
         <div
           style={styles.backgroundImageOverlay}

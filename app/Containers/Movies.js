@@ -5,7 +5,7 @@ import { moviesFetch } from '../Actions/MoviesActions';
 import NavHeader from '../Components/NavHeader';
 // Styles
 import styles from './Styles/MoviesStyle';
-const POSTER_URL = 'https://image.tmdb.org/t/p/w320';
+const POSTER_URL = 'https://image.tmdb.org/t/p/w154';
 let page = 1;
 
 class Movies extends Component {
