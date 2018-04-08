@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
-import { moviesFetch } from '../Actions/MoviesActions';
+import YouTube from '@u-wave/react-youtube';
+import { moviesFetch, trailerFetch } from '../Actions/MoviesActions';
 import Poster from '../Components/Poster';
 // Styles
 import styles from './Styles/MoviesStyle';
-const POSTER_URL = 'https://image.tmdb.org/t/p/w154';
+
 let page = 1;
 
 class Movies extends Component {
@@ -19,8 +20,9 @@ class Movies extends Component {
       selectedValue: 'Most Popular',
       show: false
     };
-    // on exiting the movie details
-    {this.props.movies.length > 0 || this.props.moviesFetch(this.state.choice, this.state.page).then(() => this.loadMoreItems());}
+
+    this.props.moviesFetch(this.state.choice, this.state.page);
+    this.loadMoreItems();
     this.handleScroll = this.handleScroll.bind(this);
   }
 
@@ -28,11 +30,10 @@ class Movies extends Component {
     this.setState({ show: false });
   }
 
-  handleShow() {
-    this.setState({ show: true });
+  handleShow(movie) {
+    this.setState({ show: true, modal: movie });
+    this.props.trailerFetch(movie.title);
   }
-
-
 
   handleScroll() {
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
@@ -68,14 +69,32 @@ class Movies extends Component {
         id="container"
         style={styles.container}
       >
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <h1>Hello</h1>
+        <Modal
+          show={this.state.show}
+          onHide={this.handleClose}
+          style={{display: 'flex', flexDirection: 'row', backgrondColor: 'rgb(32, 32, 32)'}}
+        >
+          <div
+            style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
+          >
+            <YouTube
+              video={this.props.trailerId}
+              width={640}
+              height={480}
+              autoplay
+              controls
+            />
+          </div>
         </Modal>
         <div style={styles.listContent}>
           {
             this.props.movies.map((movie, index) => {
               return (
-                <Poster key={index} movie={movie} onClick={this.handleShow} />
+                <Poster
+                  key={index}
+                  movie={movie}
+                  onClick={() => this.handleShow(movie) }
+                />
               );
             })
           }
@@ -88,8 +107,19 @@ class Movies extends Component {
 
 const mapStateToProps = (state) => {
   const movies = state.movies.data;
-
-  return { movies };
+  const trailerId = state.movies.trailerId;
+  return { movies, trailerId };
 };
 
-export default connect(mapStateToProps, {moviesFetch})(Movies);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    moviesFetch: (choice, page) => {
+      dispatch(moviesFetch(choice, page));
+    },
+    trailerFetch: movie => {
+      dispatch(trailerFetch(movie));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);
