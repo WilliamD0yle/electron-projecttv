@@ -5,6 +5,7 @@ export default StyleSheet = {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#191b1f',
+    paddingTop: 20
   },
   listContent: {
     display: 'flex',

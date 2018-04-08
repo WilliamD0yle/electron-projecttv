@@ -12,7 +12,7 @@ export default class Movies extends Component {
         flexDirection: 'row',
         flex: 1,
         height: 75,
-        backgroundColor: 'rgba(44, 46, 52, 0.5)',
+        backgroundColor: 'rgb(31, 32, 33)',
         boxShadow: '10px rgb(0, 0, 0)',
         marginBottom: 20,
       }}
