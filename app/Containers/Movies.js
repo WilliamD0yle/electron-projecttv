@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
-import YouTube from '@u-wave/react-youtube';
 import { moviesFetch, trailerFetch } from '../Actions/MoviesActions';
 import Poster from '../Components/Poster';
+import MovieDetails from '../Components/MovieDetails';
+import YoutubeComponent from '../Components/YoutubeComponent';
 // Styles
 import styles from './Styles/MoviesStyle';
 
@@ -31,7 +32,7 @@ class Movies extends Component {
   }
 
   handleShow(movie) {
-    this.setState({ show: true, modal: movie });
+    this.setState({ show: true, movie });
     this.props.trailerFetch(movie.title);
   }
 
@@ -63,29 +64,30 @@ class Movies extends Component {
     this.props.moviesFetch(this.state.choice, page);
   }
 
+  renderModal() {
+    return (
+      <Modal
+        show={this.state.show}
+        onHide={this.handleClose}
+        style={{display: 'flex', flexDirection: 'row', backgrondColor: 'rgb(32, 32, 32)'}}
+      >
+        <div
+          style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
+        >
+          {/* { this.props.trailerId ? <MovieDetails movie={this.state.movie} /> : null } */}
+          { this.props.trailerId ? <YoutubeComponent trailerId={this.props.trailerId} />: null }
+        </div>
+      </Modal>
+    );
+  }
+
   render() {
     return (
       <div
         id="container"
         style={styles.container}
       >
-        <Modal
-          show={this.state.show}
-          onHide={this.handleClose}
-          style={{display: 'flex', flexDirection: 'row', backgrondColor: 'rgb(32, 32, 32)'}}
-        >
-          <div
-            style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
-          >
-            <YouTube
-              video={this.props.trailerId}
-              width={640}
-              height={480}
-              autoplay
-              controls
-            />
-          </div>
-        </Modal>
+        {this.renderModal()}
         <div style={styles.listContent}>
           {
             this.props.movies.map((movie, index) => {
