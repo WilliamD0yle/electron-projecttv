@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { moviesFetch, trailerFetch } from '../Actions/MoviesActions';
 import Poster from '../Components/Poster';
-import MovieDetails from '../Components/MovieDetails';
 import YoutubeComponent from '../Components/YoutubeComponent';
 // Styles
 import styles from './Styles/MoviesStyle';
