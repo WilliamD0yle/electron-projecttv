@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal } from 'react-bootstrap';
 import { moviesFetch, trailerFetch } from '../Actions/MoviesActions';
 import Poster from '../Components/Poster';
-import YoutubeComponent from '../Components/YoutubeComponent';
+import MovieDetails from '../Components/MovieDetails';
 // Styles
 import styles from './Styles/MoviesStyle';
 
@@ -65,18 +64,11 @@ class Movies extends Component {
 
   renderModal() {
     return (
-      <Modal
-        show={this.state.show}
-        onHide={this.handleClose}
-        style={{display: 'flex', flexDirection: 'row', backgrondColor: 'rgb(32, 32, 32)'}}
-      >
         <div
-          style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
+          style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignSelf: 'center', position: 'absolute', zIndex: 10, backgroundClip: 'rgba(0, 0, 0, 0, 0.5)'}}
         >
-          {/* { this.props.trailerId ? <MovieDetails movie={this.state.movie} /> : null } */}
-          { this.props.trailerId ? <YoutubeComponent trailerId={this.props.trailerId} />: null }
+          <MovieDetails movie={this.state.movie} />
         </div>
-      </Modal>
     );
   }
 
@@ -86,7 +78,7 @@ class Movies extends Component {
         id="container"
         style={styles.container}
       >
-        {this.renderModal()}
+        {this.state.show ? this.renderModal() : null}
         <div style={styles.listContent}>
           {
             this.props.movies.map((movie, index) => {
@@ -106,21 +98,18 @@ class Movies extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const movies = state.movies.data;
-  const trailerId = state.movies.trailerId;
-  return { movies, trailerId };
-};
+const mapStateToProps = (state) => ({
+  movies: state.movies.data,
+  trailerId: state.movies.trailerId
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    moviesFetch: (choice, page) => {
-      dispatch(moviesFetch(choice, page));
-    },
-    trailerFetch: movie => {
-      dispatch(trailerFetch(movie));
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  moviesFetch: (choice, page) => {
+    dispatch(moviesFetch(choice, page));
+  },
+  trailerFetch: movie => {
+    dispatch(trailerFetch(movie));
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movies);
