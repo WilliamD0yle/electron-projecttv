@@ -1,11 +1,10 @@
-import { Colors } from '../../Themes';
-
 export default StyleSheet = {
   container: {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#191b1f',
-    paddingTop: 20
+    paddingTop: 20,
+    cursor: 'pointer'
   },
   listContent: {
     display: 'flex',

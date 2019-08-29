@@ -5,10 +5,6 @@ import styles from '../Containers/Styles/MovieDetailsStyle';
 
 const MovieDetails = props => (
   <div style={styles.container}>
-    {console.log(props)}
-    {/* <YouTube
-      videoId={this.props.videoID}
-    /> */}
     <img
       style={styles.backgrondImage}
       src={`https://image.tmdb.org/t/p/w780${props.movie.backdrop_path}`}
@@ -19,10 +15,9 @@ const MovieDetails = props => (
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <div style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <img
-            onClick={() => console.log('img clicked')}
             style={{
               display: 'flex', flex: 1,
-              position: 'absolute',
+              position: 'fixed',
               top: '50%',
               transform: 'translateY(-50%)',
               width: undefined,
@@ -39,6 +34,7 @@ const MovieDetails = props => (
               size={30}
               style={{margin: 30}}
               color='rgb(207, 65, 65)'
+              onClick={props.onClick}
             />
           </div>
           <h1 style={styles.title}>{props.movie.title}</h1>

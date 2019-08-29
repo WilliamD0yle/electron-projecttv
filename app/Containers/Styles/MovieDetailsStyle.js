@@ -16,7 +16,7 @@ export default StyleSheet = {
     minHeight: '100%',
   },
   backgroundImageOverlay: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',

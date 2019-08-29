@@ -63,13 +63,7 @@ class Movies extends Component {
   }
 
   renderModal() {
-    return (
-        <div
-          style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignSelf: 'center', position: 'absolute', zIndex: 10, backgroundClip: 'rgba(0, 0, 0, 0, 0.5)'}}
-        >
-          <MovieDetails movie={this.state.movie} />
-        </div>
-    );
+    return <MovieDetails movie={this.state.movie} onClick={() => this.setState({ show: false })}/>;
   }
 
   render() {
