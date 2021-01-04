@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@u-wave/react-youtube": "^0.4.2",
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "babel-runtime": "^6.22.0",
     "history": "^4.6.3",
     "prop-types": "^15.5.10",
